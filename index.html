@@ -8,12 +8,12 @@
 <body>
     <table id="userTable">
         <thead>
-            <tr><th>Username</th><th>Email</th><th>Admin</th></tr>
+            <tr><th>Username</th><th>Email</th><th>Admin</th><th>Image</th></tr>
         </thead>
         <tbody>
-            <tr><td>Webmaster</td><td>example@email.com</td><td>X</td></tr>
-            <tr><td>User123</td><td>user123@email.com</td><td>-</td></tr>
-            <tr><td>AnotherUser222</td><td>another222@email.com</td><td>-</td></tr>
+            <tr><td>Webmaster</td><td>example@email.com</td><td>X</td><td></td></tr>
+            <tr><td>User123</td><td>user123@email.com</td><td>-</td><td></td></tr>
+            <tr><td>AnotherUser222</td><td>another222@email.com</td><td>-</td><td></td></tr>
         </tbody>
     </table>
 
@@ -26,6 +26,9 @@
 
         <label for="input-admin">Admin:</label>
         <input type="checkbox" id="input-admin">
+
+        <label for="input-image">Image:</label>
+        <input type="file" id="input-image">
 
         <button type="submit" id="submit-data">Add to table</button>
     </form>
@@ -55,6 +58,9 @@
                 const email = document.getElementById("input-email").value;
                 const admin = document.getElementById("input-admin").checked;
 
+                const imageInput = document.getElementById("input-image");
+                const imageFile = imageInput.files[0];
+
                 const tableBody = document.querySelector("tbody");
                 const rows = tableBody.getElementsByTagName("tr");
 
@@ -72,6 +78,18 @@
                             cells[2].innerText = "-";
                         }
 
+                        if(imageFile) {
+                            cells[3].innerHTML = "";
+
+                            let image = document.createElement("img");
+
+                            image.width = 64;
+                            image.height = 64;
+                            image.src = URL.createObjectURL(imageFile);
+
+                            cells[3].appendChild(image);
+                        }
+
                         userFound = true;
                         break;
                     }
@@ -83,6 +101,8 @@
                     let usernameCell = document.createElement("td");
                     let emailCell = document.createElement("td");
                     let adminCell = document.createElement("td");
+                    let imageCell = document.createElement("td");
+
 
                     usernameCell.innerText = username;
                     emailCell.innerText = email;
@@ -93,9 +113,23 @@
                         adminCell.innerText = "-";
                     }
 
+                    
+                    if (imageFile) {
+                        let image = document.createElement("img");
+
+                        image.width = 64;
+                        image.height = 64;
+                        image.src = URL.createObjectURL(imageFile);
+
+                        imageCell.appendChild(image);
+                    }
+
+
+
                     newRow.appendChild(usernameCell);
                     newRow.appendChild(emailCell);
                     newRow.appendChild(adminCell);
+                    newRow.appendChild(imageCell);
 
                     tableBody.appendChild(newRow);
                 }
