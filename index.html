@@ -56,27 +56,49 @@
                 const admin = document.getElementById("input-admin").checked;
 
                 const tableBody = document.querySelector("tbody");
+                const rows = tableBody.getElementsByTagName("tr");
 
-                let newRow = document.createElement("tr");
+                let userFound = false;
 
-                let usernameCell = document.createElement("td");
-                let emailCell = document.createElement("td");
-                let adminCell = document.createElement("td");
+                for(let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName("td");
 
-                usernameCell.innerText = username;
-                emailCell.innerText = email;
+                    if(cells[0].innerText === username) {
+                        cells[1].innerText = email;
 
-                if(admin) {
-                    adminCell.innerText = "X";
-                } else {
-                    adminCell.innerText = "-";
+                        if(admin) {
+                            cells[2].innerText = "X";
+                        } else {
+                            cells[2].innerText = "-";
+                        }
+
+                        userFound = true;
+                        break;
+                    }
                 }
 
-                newRow.appendChild(usernameCell);
-                newRow.appendChild(emailCell);
-                newRow.appendChild(adminCell);
+                if(!userFound) {
+                    let newRow = document.createElement("tr");
 
-                tableBody.appendChild(newRow);
+                    let usernameCell = document.createElement("td");
+                    let emailCell = document.createElement("td");
+                    let adminCell = document.createElement("td");
+
+                    usernameCell.innerText = username;
+                    emailCell.innerText = email;
+
+                    if(admin) {
+                        adminCell.innerText = "X";
+                    } else {
+                        adminCell.innerText = "-";
+                    }
+
+                    newRow.appendChild(usernameCell);
+                    newRow.appendChild(emailCell);
+                    newRow.appendChild(adminCell);
+
+                    tableBody.appendChild(newRow);
+                }
 
                 form.reset();
             })
